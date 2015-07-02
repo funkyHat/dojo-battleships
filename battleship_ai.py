@@ -16,12 +16,16 @@ def get_random():
 def kill_it(choice):
 	""" A hit, a veritable hit.
 	"""
-	print(choice)
 	adjacents = [(chr(ord(choice[0])-1),choice[1]),
 				 (chr(ord(choice[0])+1),choice[1]),
 				 (choice[0],choice[1]-1),
 				 (choice[0],choice[1]+1),]
-	print(adjacents)
+
+	adjacents = list(set(positions)&set(adjacents))
+	choice = random.choice(adjacents)
+
+	return choice
+
 
 
 if __name__ == '__main__':
@@ -29,11 +33,11 @@ if __name__ == '__main__':
 	while True:
 		if result == 'm' or result == 's':
 			choice = get_random()
-			print("{}{}".format(choice[0],choice[1]))
 		elif result == 'h':
-			kill_it(choice)
+			choice = kill_it(choice)
 		else:
 			raise IllegalResultException('why do you hate us?')
+		print("{}{}".format(choice[0],choice[1]))
 
 		result = input()
 
